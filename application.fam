@@ -1,0 +1,8 @@
+App(
+    appid="rv32",
+    name="mini-rv32ima",
+    apptype=FlipperAppType.EXTERNAL,
+    entry_point="rv32_app",
+    stack_size=4 * 1024,
+    requires=["gui"],
+)
