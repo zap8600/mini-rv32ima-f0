@@ -51,6 +51,16 @@ static uint8_t load1(uint32_t ofs);
 
 #include "mini-rv32ima.h"
 
-uint8_t * ram_image = 0;
 struct MiniRV32IMAState * core;
 const char * kernel_command_line = 0;
+
+int32_t rv32_app() {
+    int dtb_ptr = 0;
+    dtb_ptr = ram_amt - sizeof(default64mbdtb) - sizeof( struct MiniRV32IMAState );
+    core = (struct MiniRV32IMAState *)malloc(sizeof(struct MiniRV32IMAState));
+    memset( core, 0, sizeof(struct MiniRV32IMAState) );
+    core->pc = MINIRV32_RAM_IMAGE_OFFSET;
+    core->regs[10] = 0x00;
+    core->regs[11] = dtb_ptr?(dtb_ptr+MINIRV32_RAM_IMAGE_OFFSET):0;
+    core->extraflags |= 3;
+}
